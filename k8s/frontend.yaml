@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: frontend}
+spec:
+  replicas: 2
+  selector: {matchLabels: {app: frontend}}
+  template:
+    metadata: {labels: {app: frontend}}
+    spec:
+      containers:
+      - name: frontend
+        image: frontend:latest
+        ports: [{containerPort: 5173}]
+        envFrom:
+        - configMapRef: {name: ecommerce-config}
+        - secretRef: {name: ecommerce-secrets}
+---
+apiVersion: v1
+kind: Service
+metadata: {name: frontend}
+spec:
+  selector: {app: frontend}
+  ports: [{port: 5173, targetPort: 5173}]
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata: {name: frontend-hpa}
+spec:
+  scaleTargetRef: {apiVersion: apps/v1, kind: Deployment, name: frontend}
+  minReplicas: 2
+  maxReplicas: 5
+  metrics:
+  - type: Resource
+    resource: {name: cpu, target: {type: Utilization, averageUtilization: 70}}
