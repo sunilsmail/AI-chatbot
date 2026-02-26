@@ -1,13 +1,15 @@
+import os
+
 from fastapi import APIRouter, Request
 import httpx
 
 router = APIRouter()
 ROUTES = {
-    'auth': 'http://auth-service:8001',
-    'orders': 'http://order-service:8002',
-    'policies': 'http://policy-service:8003',
-    'chat': 'http://chat-service:8004',
-    'notifications': 'http://notification-service:8005',
+    'auth': os.getenv('AUTH_SERVICE_URL', 'http://auth-service:8001'),
+    'orders': os.getenv('ORDER_SERVICE_URL', 'http://order-service:8002'),
+    'policies': os.getenv('POLICY_SERVICE_URL', 'http://policy-service:8003'),
+    'chat': os.getenv('CHAT_SERVICE_URL', 'http://chat-service:8004'),
+    'notifications': os.getenv('NOTIFICATION_SERVICE_URL', 'http://notification-service:8005'),
 }
 
 @router.api_route('/{service}/{path:path}', methods=['GET','POST','PUT','PATCH','DELETE'])
