@@ -1,0 +1,5 @@
+-r requirements.txt
+langchain==0.2.12
+langgraph==0.2.14
+langchain-openai==0.1.20
+tenacity==8.5.0
