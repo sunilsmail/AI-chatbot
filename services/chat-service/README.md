@@ -15,6 +15,8 @@ LangGraph-powered chatbot service with chat history storage.
 ## Environment
 - `DATABASE_URL`
 - `REDIS_URL`
+- `ORDER_SERVICE_URL`
+- `POLICY_SERVICE_URL`
 - `OPENAI_API_KEY`
 
 ## Run independently
@@ -32,6 +34,8 @@ From `services/chat-service`:
 ```bash
 DATABASE_URL=postgresql+asyncpg://app:app@localhost:5432/ecommerce \
 REDIS_URL=redis://localhost:6379/0 \
+ORDER_SERVICE_URL=http://localhost:8002 \
+POLICY_SERVICE_URL=http://localhost:8003 \
 OPENAI_API_KEY=your-openai-key \
 uvicorn app.main:app --host 0.0.0.0 --port 8004
 ```
