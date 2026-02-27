@@ -39,13 +39,13 @@ async def memory_node(state: State):
 
 async def order_node(state: State):
     async with httpx.AsyncClient() as client:
-        resp = await client.get(f"http://order-service:8002/orders/1")
+        resp = await client.get(f"{settings.order_service_url}/orders/1")
     state['response']=f"Order service says: {resp.text}"
     return state
 
 async def policy_node(state: State):
     async with httpx.AsyncClient() as client:
-        resp = await client.get(f"http://policy-service:8003/policies/product/1")
+        resp = await client.get(f"{settings.policy_service_url}/policies/product/1")
     state['response']=f"Policy details: {resp.text}"
     return state
 

@@ -31,6 +31,8 @@ REDIS_URL=redis://redis:6379/0
 JWT_SECRET=super-secret
 JWT_ALGORITHM=HS256
 OPENAI_API_KEY=change-me
+ORDER_SERVICE_URL=http://order-service:8002
+POLICY_SERVICE_URL=http://policy-service:8003
 ```
 
 When running services independently (outside Docker Compose), update hostnames in env values:
@@ -103,7 +105,7 @@ cd services/order-service && DATABASE_URL=postgresql+asyncpg://app:app@localhost
 cd services/policy-service && DATABASE_URL=postgresql+asyncpg://app:app@localhost:5432/ecommerce uvicorn app.main:app --host 0.0.0.0 --port 8003
 
 # terminal 4
-cd services/chat-service && DATABASE_URL=postgresql+asyncpg://app:app@localhost:5432/ecommerce REDIS_URL=redis://localhost:6379/0 OPENAI_API_KEY=your-key uvicorn app.main:app --host 0.0.0.0 --port 8004
+cd services/chat-service && DATABASE_URL=postgresql+asyncpg://app:app@localhost:5432/ecommerce REDIS_URL=redis://localhost:6379/0 ORDER_SERVICE_URL=http://localhost:8002 POLICY_SERVICE_URL=http://localhost:8003 OPENAI_API_KEY=your-key uvicorn app.main:app --host 0.0.0.0 --port 8004
 
 # terminal 5
 cd services/notification-service && REDIS_URL=redis://localhost:6379/0 uvicorn app.main:app --host 0.0.0.0 --port 8005
